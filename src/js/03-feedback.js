@@ -10,7 +10,7 @@ const feedbackForm = 'feedback-form-state';
 
 const formData = {};
 
-mainForm.addEventListener('input', throttle(onInputData, 1000));
+mainForm.addEventListener('input', throttle(onInputData, 250));
 
 mainForm.addEventListener('submit', onSubmitData);
 
@@ -25,13 +25,18 @@ function onSubmitData(e) {
   e.preventDefault();
   console.log(e.currentTarget);
   localStorage.setItem(feedbackForm, JSON.stringify(formData));
+  e.currentTarget.reset();
+  //   localStorage.removeItem(feedbackForm);
 }
 
 function loadSavedData() {
   const data = localStorage.getItem(feedbackForm);
-
+  const savedData = JSON.parse(data);
+  console.log(savedData);
   if (data) {
     console.log(data);
+    mainForm.elements.email.value = savedData.email;
+    mainForm.elements.message.value = savedData.message;
   }
 }
 
