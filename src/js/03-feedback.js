@@ -19,25 +19,24 @@ loadSavedData();
 function onInputData(evt) {
   formData[evt.target.name] = evt.target.value;
   console.log(formData);
+  localStorage.setItem(feedbackForm, JSON.stringify(formData));
 }
 
 function onSubmitData(e) {
   e.preventDefault();
-  console.log(e.currentTarget);
-  localStorage.setItem(feedbackForm, JSON.stringify(formData));
   e.currentTarget.reset();
-  //   localStorage.removeItem(feedbackForm);
+  localStorage.removeItem(feedbackForm);
 }
 
 function loadSavedData() {
   const data = localStorage.getItem(feedbackForm);
   const savedData = JSON.parse(data);
-  console.log(savedData);
+
   if (data) {
-    console.log(data);
     mainForm.elements.email.value = savedData.email;
     mainForm.elements.message.value = savedData.message;
   }
 }
 
-console.log(mainForm.elements);
+console.log('E-mail:', mainForm.elements.email.value);
+console.log('Message:', mainForm.elements.message.value);
